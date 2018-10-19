@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+whiteboard-app/node_modules
+
+# testing
+whiteboard-app/coverage
+
+# production
+whiteboard-app/build
+
+# webstorm
+whiteboard-app/.idea
+
+# misc
+whiteboard-app/.DS_Store
+whiteboard-app/.env.local
+whiteboard-app/.env.development.local
+whiteboard-app/.env.test.local
+whiteboard-app/.env.production.local
+
+whiteboard-app/npm-debug.log*
+whiteboard-app/yarn-debug.log*
+whiteboard-app/yarn-error.log*
