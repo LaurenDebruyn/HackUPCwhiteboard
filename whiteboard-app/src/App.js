@@ -1,28 +1,66 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { ReactComponent as PencilIcon } from './pencil.svg';
+import { ReactComponent as TextIcon } from './text.svg';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentTool: 'Pencil'
+        };
+        this.handleToolClick = this.handleToolClick.bind(this);
+    }
+
+    handleToolClick(tool) {
+            this.setState((prevState) => {
+                if (prevState.currentTool !== tool) {
+                    return {
+                        currentTool: tool
+                    };
+                }
+            });
+        };
+
+    render() {
+        return (
+            <div>
+                <h1>Whiteboard App</h1>
+                <Toolbar handleToolClick={this.handleToolClick}/>
+                <p>{this.state.currentTool}</p>
+                <Whiteboard />
+            </div>
     );
-  }
+    }
+}
+
+class Toolbar extends Component {
+    render () {
+        return (
+            <div>
+                <button onClick={
+                    (e) => {
+                        this.props.handleToolClick('Pencil');
+                    }
+                }><PencilIcon /></button>
+                <button onClick={
+                    (e) => {
+                        this.props.handleToolClick('Text');
+                    }
+                }><TextIcon /></button>
+            </div>
+        );
+    }
+}
+
+class Whiteboard extends Component {
+    render() {
+        return (
+            <div>
+                <canvas></canvas>
+            </div>
+        );
+    }
 }
 
 export default App;
