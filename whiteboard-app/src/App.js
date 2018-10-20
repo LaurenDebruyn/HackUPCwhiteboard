@@ -44,22 +44,19 @@ class App extends React.Component {
     componentDidMount() {
         this.socket.on('update', (serializedPath) => {
             console.log('Receive: ', deserialize(serializedPath));
-            this.handleAddPath(deserialize(serializedPath));
+            this.handleAddPath(deserialize(serializedPath), false);
         })
     }
 
-    handleAddPath(path) {
-        this.setState((prevState) => {
-            if (path) {
-                return {
-                    paths: prevState.paths.concat(path)
-                };
-            }
-        });
-
-        const serializedPath = serialize(path);
-        this.socket.emit('update', serializedPath);
-        console.log('Emit');
+    handleAddPath(path, emit) {
+        if (path) {
+            this.setState((prevState) => ({paths: prevState.paths.concat(path)}));
+        }
+        if (emit) {
+            const serializedPath = serialize(path);
+            this.socket.emit('update', serializedPath);
+            console.log('Emit');
+        }
     };
 
     render() {

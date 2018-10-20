@@ -50,7 +50,7 @@ export default class WhiteboardSVG extends React.Component {
 
     handleDrawEnd() {
         const path = WhiteboardSVG.parsePoints(this.state.activePath, this.props.color);
-        this.props.handleAddPath(path);
+        this.props.handleAddPath(path, true);
         this.setState((prevState) => {
             if (prevState.isDrawing) {
                 return {
