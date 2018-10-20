@@ -1,7 +1,6 @@
 // Main dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
-import svg, {Container as draw} from 'svg.js'
 
 export default class WhiteboardSVG extends React.Component {
     constructor(props) {
@@ -26,14 +25,23 @@ export default class WhiteboardSVG extends React.Component {
 
     handleDrawStart(e) {
         e.preventDefault();
+        const pageX = e.pageX;
+        const pageY = e.pageY;
+
+        console.log(pageX, ',', pageY);
+
         if (this.props.tool === 'text') {
+            const x = pageX - this.state.left;
+            const y = pageY - this.state.top;
             console.log("text");
+            const text = prompt("Please enter your text","");
+            this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color));
         }
         else if (this.props.tool === 'eraser') {
             console.log("eraser");
         }
         else {
-            console.log("draw")
+            console.log("draw");
             this.setState((prevState) => {
                 if (!prevState.isDrawing) {
                     return {
@@ -48,14 +56,12 @@ export default class WhiteboardSVG extends React.Component {
     handleDrawMove(e) {
         if (this.props.tool === 'text') {
             console.log("drawing texbox size");
-
-
         }
         else if (this.props.tool === 'eraser') {
             console.log("erasing");
         }
         else {
-            console.log("drawing")
+            console.log("drawing");
             const pageX = e.pageX;
             const pageY = e.pageY;
             this.setState((prevState) => {
@@ -70,17 +76,23 @@ export default class WhiteboardSVG extends React.Component {
     };
 
     handleDrawEnd() {
-        const path = WhiteboardSVG.parsePoints(this.state.activePath, this.props.color);
-        this.props.handleAddPath(path, true);
-        this.setState((prevState) => {
-            if (prevState.isDrawing) {
-                return {
-                    isDrawing: false,
-                    activePath: []
-                };
-            }
-        });
+        if (this.props.tool === 'pencil') {
+            const path = WhiteboardSVG.parsePoints(this.state.activePath, this.props.color);
+            this.props.handleAddPath(path, true);
+            this.setState((prevState) => {
+                if (prevState.isDrawing) {
+                    return {
+                        isDrawing: false,
+                        activePath: []
+                    };
+                }
+            });
+        }
     };
+
+    static textToSVG(text, x, y, color) {
+        return <text x={x} y={y} fill={color}>{text}</text>;
+    }
 
     static parsePoints(points, color) {
         let path;
@@ -120,7 +132,7 @@ export default class WhiteboardSVG extends React.Component {
                 >
                     {[this.props.paths]}
                     {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color)}
-                    {[this.state.texts]}
+                    {[this.props.textFields]}
                 </svg>
             </div>
         );

@@ -18,11 +18,13 @@ class App extends React.Component {
         this.state = {
             tool: 'pencil',
             color: 'black',
-            paths: []
+            paths: [],
+            textFields: []
         };
         this.handleToolClick = this.handleToolClick.bind(this);
         this.handleColorClick = this.handleColorClick.bind(this);
         this.handleAddPath = this.handleAddPath.bind(this);
+        this.handleAddTextField = this.handleAddTextField.bind(this);
     }
 
     handleToolClick(tool) {
@@ -51,13 +53,26 @@ class App extends React.Component {
     handleAddPath(path, emit) {
         if (path) {
             this.setState((prevState) => ({paths: prevState.paths.concat(path)}));
-        }
-        if (emit) {
-            const serializedPath = serialize(path);
-            this.socket.emit('update', serializedPath);
-            console.log('Emit');
+
+            if (emit) {
+                const serializedPath = serialize(path);
+                this.socket.emit('update', serializedPath);
+                console.log('Emit');
+            }
         }
     };
+
+    handleAddTextField(text, emit) {
+        if (text) {
+            this.setState((prevState) => ({textFields: prevState.textFields.concat(text)}));
+
+            if (emit) {
+                const serializedText = serialize(text);
+                this.socket.emit('update', serializedText);
+                console.log('Emit');
+            }
+        }
+    }
 
     render() {
         return (
@@ -69,6 +84,8 @@ class App extends React.Component {
                     tool={this.state.tool}
                     handleAddPath={this.handleAddPath}
                     paths={this.state.paths}
+                    handleAddTextField={this.handleAddTextField}
+                    textFields={this.state.textFields}
                     color={this.state.color}
                 />
             </div>
