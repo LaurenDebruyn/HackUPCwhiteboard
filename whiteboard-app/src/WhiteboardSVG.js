@@ -2,11 +2,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
 export default class WhiteboardSVG extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            paths: [ [] ],
+            paths: [],
             isDrawing: false,
             top: 0,
             left: 0
@@ -26,11 +27,13 @@ export default class WhiteboardSVG extends React.Component {
 
     handleDrawStart(e) {
         e.preventDefault();
-        
+
         this.setState((prevState) => {
             if (!prevState.isDrawing) {
                 return {
-                    paths: [].concat(prevState.paths, [[]]),
+                    paths: prevState.paths.concat({
+                        id: Date.UTC()
+                    }),
                     isDrawing: true
                 }
             }

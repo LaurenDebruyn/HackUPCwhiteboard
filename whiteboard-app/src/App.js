@@ -1,5 +1,6 @@
 // Main dependencies
 import React from 'react';
+import openSocket from 'socket.io-client';
 
 // Own components
 import Toolbar from './Toolbar.js';
@@ -25,12 +26,10 @@ class App extends React.Component {
             });
         };
 
-    // componentDidMount() {
-    //     const xmlHttp = new XMLHttpRequest();
-    //     xmlHttp.open('GET', 'https://hackupcwhiteboard.herokuapp.com/test', false);
-    //     xmlHttp.send(null);
-    //     console.log(xmlHttp.responseText);
-    // }
+    componentDidMount() {
+        const socket = openSocket('http://hackupcwhiteboard.herokuapp.com');
+        socket.emit('coordinates', [1,2,3,4,5]);
+    }
 
     render() {
         return (
