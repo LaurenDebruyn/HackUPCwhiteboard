@@ -73,7 +73,7 @@ export default class WhiteboardSVG extends React.Component {
 
     handleDrawEnd() {
         if (this.props.tool === 'pencil' || this.props.tool === 'eraser') {
-            const path = WhiteboardSVG.parsePoints(this.state.activePath, this.props.color);
+            const path = WhiteboardSVG.parsePoints(this.state.activePath, this.props.color, WhiteboardSVG.getSize(this.props.size));
             this.props.handleAddPath(path, true);
             this.setState((prevState) => {
                 if (prevState.isDrawing) {
@@ -90,7 +90,7 @@ export default class WhiteboardSVG extends React.Component {
         return <text x={x} y={y} fill={color}>{text}</text>;
     }
 
-    static parsePoints(points, color) {
+    static parsePoints(points, color, size) {
         let path;
         if (points && points.length > 0) {
             path = `M ${points[0].x} ${points[0].y}`;
@@ -104,10 +104,28 @@ export default class WhiteboardSVG extends React.Component {
             return (<path
                 key={path}
                 stroke={color}
-                strokeWidth={10}
+                strokeWidth={size}
                 d={path}
                 fill="none"
             />);
+        }
+    }
+
+    static getSize(size) {
+        if (size === 'extraSmall'){
+            return(4);
+        }
+        if (size === 'small'){
+            return(8);
+        }
+        if (size === 'medium'){
+            return(12);
+        }
+        if (size === 'big'){
+            return(16);
+        }
+        if (size === 'extraBig'){
+            return(20);
         }
     }
 
@@ -125,7 +143,7 @@ export default class WhiteboardSVG extends React.Component {
                     className="canvas"
                 >
                     {[this.props.paths]}
-                    {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color)}
+                    {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color, WhiteboardSVG.getSize(this.props.size))}
                     {[this.props.textFields]}
                 </svg>
             </div>

@@ -6,7 +6,9 @@ import { serialize, deserialize } from "react-serialize"
 // Own components
 import Toolbar from './Toolbar.js';
 import ColorBar from "./ColorBar.js";
+import SizeBar from "./SizeBar.js";
 import WhiteboardSVG from './WhiteboardSVG.js';
+
 
 class App extends React.Component {
     constructor(props) {
@@ -15,11 +17,13 @@ class App extends React.Component {
         this.state = {
             tool: 'pencil',
             color: 'black',
+            size: 'medium',
             paths: [],
             textFields: []
         };
         this.handleToolClick = this.handleToolClick.bind(this);
         this.handleColorClick = this.handleColorClick.bind(this);
+        this.handleSizeClick = this.handleSizeClick.bind(this);
         this.handleAddPath = this.handleAddPath.bind(this);
         this.handleAddTextField = this.handleAddTextField.bind(this);
     }
@@ -42,6 +46,15 @@ class App extends React.Component {
             }
         });
     };
+
+    handleSizeClick(size) {
+        this.setState((prevState) => {
+            if (prevState.size !== size) {
+                return {size};
+            }
+        });
+    };
+
 
     componentDidMount() {
         this.socket.on('update', (serializedPath) => {
@@ -80,6 +93,7 @@ class App extends React.Component {
                 <h1>Whiteboard App</h1>
                 <Toolbar handleToolClick={this.handleToolClick}/>
                 <ColorBar handleColorClick={this.handleColorClick}/>
+                <SizeBar handleSizeClick={this.handleSizeClick}/>
                 <WhiteboardSVG
                     tool={this.state.tool}
                     handleAddPath={this.handleAddPath}
@@ -87,6 +101,7 @@ class App extends React.Component {
                     handleAddTextField={this.handleAddTextField}
                     textFields={this.state.textFields}
                     color={this.state.color}
+                    size={this.state.size}
                 />
             </div>
     );
