@@ -1,4 +1,7 @@
+// Main dependencies
 import {Component} from "react";
+
+// Icons
 import {ReactComponent as PencilIcon} from "./pencil.svg";
 import {ReactComponent as TextIcon} from "./text.svg";
 import React from "react";

@@ -1,15 +1,9 @@
 // Main dependencies
 import React, { Component } from 'react';
-import Konva from 'konva';
-import {Layer, Line, Rect, Stage, Group} from 'react-konva';
 
 // Own components
 import Toolbar from 'Toolbar';
 import Whiteboard from 'Whiteboard';
-
-// Icons
-import { ReactComponent as PencilIcon } from './pencil.svg';
-import { ReactComponent as TextIcon } from './text.svg';
 
 // CSS
 import './App.css';

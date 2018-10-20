@@ -1,8 +1,8 @@
-import {Component} from "react";
+// Main dependencies
 import {Layer, Line, Rect, Stage} from "react-konva";
 import React from "react";
 
-class Whiteboard extends Component {
+class Whiteboard extends React.Component {
     render() {
         return (
             <Stage
