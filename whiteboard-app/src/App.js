@@ -15,9 +15,12 @@ class App extends React.Component {
         super(props);
         this.state = {
             tool: 'pencil',
-            color: 'black'
+            color: 'black',
+            paths: []
         };
         this.handleToolClick = this.handleToolClick.bind(this);
+        this.handleColorClick = this.handleColorClick.bind(this);
+        this.handleAddPath = this.handleAddPath.bind(this);
     }
 
     handleToolClick(tool) {
@@ -41,6 +44,16 @@ class App extends React.Component {
         socket.emit('coordinates', [1,2,3,4,5]);
     }
 
+    handleAddPath(path) {
+        this.setState((prevState) => {
+            if (path) {
+                return {
+                    paths: prevState.paths.concat(path)
+                };
+            }
+        });
+    };
+
     render() {
         return (
             <div>
@@ -49,6 +62,8 @@ class App extends React.Component {
                 <ColorBar handleColorClick={this.handleColorClick}/>
                 <WhiteboardSVG
                     tool={this.state.tool}
+                    handleAddPath={this.handleAddPath}
+                    paths={this.state.paths}
                 />
             </div>
     );
