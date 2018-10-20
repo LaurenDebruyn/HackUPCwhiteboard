@@ -27,20 +27,20 @@ export default class WhiteboardSVG extends React.Component {
 
     handleDrawStart(e) {
         e.preventDefault();
-        const pageX = e.pageX;
-        const pageY = e.pageY;
-
-        console.log(pageX, ',', pageY);
+        let pageX = e.pageX;
+        let pageY = e.pageY;
+        if (!pageX) {
+            pageX = e.touches[0].pageX;
+            pageY = e.touches[0].pageY;
+        }
 
         if (this.props.tool === 'text') {
             const x = pageX - this.state.left;
             const y = pageY - this.state.top;
-            console.log("text");
             const text = prompt("Please enter your text","");
             this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color), true);
         }
         else {
-            console.log("draw");
             this.setState((prevState) => {
                 if (!prevState.isDrawing) {
                     return {
@@ -53,11 +53,7 @@ export default class WhiteboardSVG extends React.Component {
     };
 
     handleDrawMove(e) {
-        if (this.props.tool === 'text') {
-            console.log("drawing texbox size");
-        }
-        else {
-            console.log("drawing");
+        if (this.props.tool === 'pencil' || this.props.tool === 'eraser') {
             const pageX = e.pageX;
             const pageY = e.pageY;
             this.setState((prevState) => {
@@ -101,10 +97,16 @@ export default class WhiteboardSVG extends React.Component {
                 end = points[i + 2];
                 path += ` C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${end.x} ${end.y}`;
             }
+            let width;
+            if (color === 'white') {
+                width = 15;
+            } else {
+                width = 3;
+            }
             return (<path
                 key={path}
                 stroke={color}
-                strokeWidth={2}
+                strokeWidth={width}
                 d={path}
                 fill="none"
             />);
