@@ -26,7 +26,6 @@ export default class WhiteboardSVG extends React.Component {
         this.setState({ top, left });
     }
 
-
     handleDrawStart(e) {
         e.preventDefault();
 
