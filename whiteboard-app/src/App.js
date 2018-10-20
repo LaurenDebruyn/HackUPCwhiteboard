@@ -4,11 +4,11 @@ import openSocket from 'socket.io-client';
 
 // Own components
 import Toolbar from './Toolbar.js';
+import ColorBar from "./ColorBar.js";
 import WhiteboardSVG from './WhiteboardSVG.js';
 
 // CSS
 import './App.css';
-import ColorBar from "./ColorBar.js";
 
 class App extends React.Component {
     constructor(props) {
