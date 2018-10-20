@@ -1,6 +1,7 @@
 // Main dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
+import svg, {Container as draw} from 'svg.js'
 
 export default class WhiteboardSVG extends React.Component {
     constructor(props) {
@@ -26,28 +27,47 @@ export default class WhiteboardSVG extends React.Component {
 
     handleDrawStart(e) {
         e.preventDefault();
-
-        this.setState((prevState) => {
-            if (!prevState.isDrawing) {
-                return {
-                    isDrawing: true,
-                    activePath: []
+        if (this.props.tool === 'text') {
+            console.log("text");
+        }
+        else if (this.props.tool === 'eraser') {
+            console.log("eraser");
+        }
+        else {
+            console.log("draw")
+            this.setState((prevState) => {
+                if (!prevState.isDrawing) {
+                    return {
+                        isDrawing: true,
+                        activePath: []
+                    }
                 }
-            }
-        });
+            });
+        }
     };
 
     handleDrawMove(e) {
-        const pageX = e.pageX;
-        const pageY = e.pageY;
-        this.setState((prevState) => {
-            if (prevState.isDrawing) {
-                const x = pageX - prevState.left;
-                const y = pageY - prevState.top;
-                const activePath = prevState.activePath.concat({ x, y });
-                return { activePath };
-            }
-        });
+        if (this.props.tool === 'text') {
+            console.log("drawing texbox size");
+
+
+        }
+        else if (this.props.tool === 'eraser') {
+            console.log("erasing");
+        }
+        else {
+            console.log("drawing")
+            const pageX = e.pageX;
+            const pageY = e.pageY;
+            this.setState((prevState) => {
+                if (prevState.isDrawing) {
+                    const x = pageX - prevState.left;
+                    const y = pageY - prevState.top;
+                    const activePath = prevState.activePath.concat({x, y});
+                    return {activePath};
+                }
+            });
+        }
     };
 
     handleDrawEnd() {
@@ -107,6 +127,7 @@ export default class WhiteboardSVG extends React.Component {
                 >
                     {[this.state.paths]}
                     {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color)}
+                    {[this.state.texts]}
                 </svg>
             </div>
         );
