@@ -88,8 +88,8 @@ export default class WhiteboardSVG extends React.Component {
             <div>
                 <svg
                     style={{ border: '1px solid black', cursor: 'crosshair' }}
-                    width={600}
-                    height={480}
+                    width={200}
+                    height={200}
                     ref="canvas"
                     onMouseDown={this.handleDrawStart}
                     onTouchStart={this.handleDrawStart}
