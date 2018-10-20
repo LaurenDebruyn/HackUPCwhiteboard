@@ -7868,6 +7868,11 @@ react-scripts@2.0.5:
   optionalDependencies:
     fsevents "1.2.4"
 
+react-serialize@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-serialize/-/react-serialize-0.2.0.tgz#9f3c694ae6438c3b17b7e9e2cbc7337921888979"
+  integrity sha512-QWkALlrv9E8HOIk5XEznBmjhVsL/NE0mzccu+7AHAqbfmRDQg7vFXbZt6/I2w/WQ4re4H1AmnVedzHoYY4yb4g==
+
 react@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"

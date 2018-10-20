@@ -1,6 +1,7 @@
 // Main dependencies
 import React from 'react';
 import openSocket from 'socket.io-client';
+import { serialize, deserialize } from "react-serialize"
 
 // Own components
 import Toolbar from './Toolbar.js';
@@ -13,6 +14,7 @@ import './App.css';
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.socket = openSocket('http://hackupcwhiteboard.herokuapp.com/');
         this.state = {
             tool: 'pencil',
             color: 'black',
@@ -40,8 +42,10 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        const socket = openSocket('http://hackupcwhiteboard.herokuapp.com');
-        socket.emit('coordinates', [1,2,3,4,5]);
+        this.socket.on('update', (serializedPath) => {
+            console.log('Receive: ', deserialize(serializedPath));
+            this.handleAddPath(deserialize(serializedPath));
+        })
     }
 
     handleAddPath(path) {
@@ -52,6 +56,10 @@ class App extends React.Component {
                 };
             }
         });
+
+        const serializedPath = serialize(path);
+        this.socket.emit('update', serializedPath);
+        console.log('Emit');
     };
 
     render() {

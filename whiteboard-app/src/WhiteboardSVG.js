@@ -38,7 +38,6 @@ export default class WhiteboardSVG extends React.Component {
     handleDrawMove(e) {
         const pageX = e.pageX;
         const pageY = e.pageY;
-        alert('Draw move');
         this.setState((prevState) => {
             if (prevState.isDrawing) {
                 const x = pageX - prevState.left;
