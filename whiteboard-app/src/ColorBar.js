@@ -10,27 +10,27 @@ export default class ColorBar extends React.Component {
             <div>
                 <button onClick={
                     (e) => {
-                        this.props.handleToolClick('colorRed');
+                        this.props.handleColorClick('red');
                     }
                 }><ColorBox fill="red"/></button>
                 <button onClick={
                     (e) => {
-                        this.props.handleToolClick('colorGreen');
+                        this.props.handleColorClick('green');
                     }
                 }><ColorBox fill="green"/></button>
                 <button onClick={
                     (e) => {
-                        this.props.handleToolClick('colorBlue');
+                        this.props.handleColorClick('blue');
                     }
                 }><ColorBox fill="blue"/></button>
                 <button onClick={
                     (e) => {
-                        this.props.handleToolClick('colorYellow');
+                        this.props.handleColorClick('yellow');
                     }
                 }><ColorBox fill="yellow"/></button>
                 <button onClick={
                     (e) => {
-                        this.props.handleToolClick('colorBlack');
+                        this.props.handleColorClick('black');
                     }
                 }><ColorBox fill="black"/></button>
             </div>

@@ -8,7 +8,7 @@ import WhiteboardSVG from './WhiteboardSVG.js';
 
 // CSS
 import './App.css';
-import ColorBar from "./ColorBar";
+import ColorBar from "./ColorBar.js";
 
 class App extends React.Component {
     constructor(props) {
@@ -18,6 +18,7 @@ class App extends React.Component {
             color: 'black'
         };
         this.handleToolClick = this.handleToolClick.bind(this);
+        this.handleColorClick = this.handleColorClick.bind(this);
     }
 
     handleToolClick(tool) {
@@ -49,6 +50,7 @@ class App extends React.Component {
                 <ColorBar handleColorClick={this.handleColorClick}/>
                 <WhiteboardSVG
                     tool={this.state.tool}
+                    color={this.state.color}
                 />
             </div>
     );

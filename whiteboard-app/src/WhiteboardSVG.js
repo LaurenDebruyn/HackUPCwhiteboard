@@ -53,9 +53,9 @@ export default class WhiteboardSVG extends React.Component {
     };
 
     handleDrawEnd() {
-        this.setState((prevState) => {
+        this.setState((prevState, prevProps) => {
             if (prevState.isDrawing) {
-                const path = WhiteboardSVG.parsePoints(prevState.activePath);
+                const path = WhiteboardSVG.parsePoints(prevState.activePath, prevProps.color);
                 if (path) {
                     return {
                         isDrawing: false,
@@ -71,7 +71,7 @@ export default class WhiteboardSVG extends React.Component {
         });
     };
 
-    static parsePoints(points) {
+    static parsePoints(points, color) {
         let path;
         if (points && points.length > 0) {
             path = `M ${points[0].x} ${points[0].y}`;
@@ -84,7 +84,7 @@ export default class WhiteboardSVG extends React.Component {
             }
             return (<path
                 key={path}
-                stroke="blue"
+                stroke={color}
                 strokeWidth={10}
                 d={path}
                 fill="none"
@@ -108,7 +108,7 @@ export default class WhiteboardSVG extends React.Component {
                     onTouchMove={this.handleDrawMove}
                 >
                     {[this.state.paths]}
-                    {WhiteboardSVG.parsePoints(this.state.activePath)}
+                    {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color)}
                 </svg>
             </div>
         );
