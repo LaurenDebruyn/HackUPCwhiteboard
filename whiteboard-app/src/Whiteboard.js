@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Main dependencies
-import {Layer, Line, Rect, Stage} from "react-konva";
+import {Layer, Image, Stage} from "react-konva";
 
 export default class Whiteboard extends React.Component {
     render() {
@@ -10,46 +10,96 @@ export default class Whiteboard extends React.Component {
             <Stage
                 width={1000}
                 height={1000}
-                onMouseDown={this.handleMouseDown}
             >
                 <Layer>
-                    <Line />
-                    <Rect
-                        x={10} y={10} width={50} height={50}
-                        fill='green'
-                        shadowBlur={10}
+                    <Drawing
+                        tool={this.props.tool}
                     />
                 </Layer>
             </Stage>
         );
     }
-
-    handleMouseDown() {
-        console.log('Mousedown')
-    }
 }
 
-// class MyRect extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             color: 'green'
-//         };
-//         this.handleClick = this.handleClick.bind(this);
-//     }
-//     handleClick() {
-//         this.setState({
-//             color: Konva.Util.getRandomColor()
-//         });
-//     }
-//     render() {
-//         return (
-//             <Rect
-//                 x={10} y={10} width={50} height={50}
-//                 fill={this.state.color}
-//                 shadowBlur={10}
-//                 onClick={this.handleClick}
-//             />
-//         );
-//     }
-// }
+class Drawing extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isDrawing: false,
+            canvas: undefined,
+            context: undefined,
+        };
+    }
+
+    componentDidMount() {
+        const canvas = document.createElement("canvas");
+        canvas.width = 500;
+        canvas.height = 500;
+        const context = canvas.getContext("2d");
+
+        this.setState(() => ({canvas, context}));
+    }
+
+    handleMouseDown = () => {
+        this.setState(() => ({isDrawing: true}));
+        const stage = this.image.getStage();
+        this.lastPointerPosition = stage.getPointerPosition();
+    };
+
+    handleMouseUp = () => {
+        this.setState(() => ({isDrawing: false}));
+    };
+
+    handleMouseMove = (e) => {
+        const {context, isDrawing} = this.state;
+
+        if (isDrawing) {
+            // context.strokeStyle = "#df4b26";
+            context.lineJoin = "round";
+
+            if (this.props.tool === 'pencil') {
+                context.globalCompositeOperation = "source-over";
+                context.lineWidth = 2;
+            } else if (this.props.tool === 'eraser') {
+                context.globalCompositeOperation = "destination-out";
+                context.lineWidth = 10;
+            }
+
+            context.beginPath();
+
+            const relPos = {
+                x: this.lastPointerPosition.x - this.image.x(),
+                y: this.lastPointerPosition.y - this.image.y()
+            };
+            context.moveTo(relPos.x, relPos.y);
+
+            const stage = this.image.getStage();
+
+            const pos = stage.getPointerPosition();
+
+            const localPos = {
+                x: pos.x - this.image.x(),
+                y: pos.y - this.image.y()
+            };
+            context.lineTo(localPos.x, localPos.y);
+            context.closePath();
+            context.stroke();
+            this.lastPointerPosition = pos;
+            this.image.getLayer().draw();
+        }
+    };
+
+    render() {
+        return (
+            <Image
+                image={this.state.canvas}
+                ref={(node) => (this.image = node)}
+                width={500}
+                height={500}
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
+                onMouseMove={this.handleMouseMove}
+            />
+        );
+    }
+}
