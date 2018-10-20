@@ -35,7 +35,7 @@ export default class WhiteboardSVG extends React.Component {
             const y = pageY - this.state.top;
             console.log("text");
             const text = prompt("Please enter your text","");
-            this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color));
+            this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color), true);
         }
         else if (this.props.tool === 'eraser') {
             console.log("eraser");
