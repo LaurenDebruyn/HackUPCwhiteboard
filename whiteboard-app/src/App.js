@@ -74,7 +74,6 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <h1>Whiteboard App</h1>
                 <Toolbar handleToolClick={this.handleToolClick}/>
                 <ColorBar handleColorClick={this.handleColorClick}/>
                 <WhiteboardSVG
@@ -84,7 +83,8 @@ class App extends React.Component {
                     handleAddTextField={this.handleAddTextField}
                     textFields={this.state.textFields}
                     color={this.state.color}
-                />
+                >
+                </WhiteboardSVG>
             </div>
     );
     }

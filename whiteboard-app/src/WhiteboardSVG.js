@@ -110,7 +110,7 @@ export default class WhiteboardSVG extends React.Component {
             return (<path
                 key={path}
                 stroke={color}
-                strokeWidth={10}
+                strokeWidth={2}
                 d={path}
                 fill="none"
             />);
