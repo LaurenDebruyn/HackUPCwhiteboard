@@ -1,6 +1,7 @@
 // Main dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Image} from "react-konva";
 
 
 export default class WhiteboardSVG extends React.Component {
@@ -101,8 +102,11 @@ export default class WhiteboardSVG extends React.Component {
                     height={480}
                     ref="canvas"
                     onMouseDown={this.handleDrawStart}
+                    onTouchStart={this.handleDrawStart}
                     onMouseUp={this.handleDrawEnd}
+                    onTouchEnd={this.handleDrawEnd}
                     onMouseMove={this.handleDrawMove}
+                    onTouchMove={this.handleDrawMove}
                 >
                     {[this.state.paths]}
                     {WhiteboardSVG.parsePoints(this.state.activePath)}
