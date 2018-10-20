@@ -4,6 +4,7 @@ import openSocket from 'socket.io-client';
 
 // Own components
 import Toolbar from './Toolbar.js';
+import ColorBar from "./ColorBar.js";
 import WhiteboardSVG from './WhiteboardSVG.js';
 
 // CSS
@@ -14,17 +15,26 @@ class App extends React.Component {
         super(props);
         this.state = {
             tool: 'pencil',
+            color: 'black'
         };
         this.handleToolClick = this.handleToolClick.bind(this);
     }
 
     handleToolClick(tool) {
-            this.setState((prevState) => {
-                if (prevState.tool !== tool) {
-                    return {tool};
-                }
-            });
-        };
+        this.setState((prevState) => {
+            if (prevState.tool !== tool) {
+                return {tool};
+            }
+        });
+    };
+
+    handleColorClick(color) {
+        this.setState((prevState) => {
+            if (prevState.color !== color) {
+                return {color};
+            }
+        });
+    };
 
     componentDidMount() {
         const socket = openSocket('http://hackupcwhiteboard.herokuapp.com');
@@ -36,6 +46,7 @@ class App extends React.Component {
             <div>
                 <h1>Whiteboard App</h1>
                 <Toolbar handleToolClick={this.handleToolClick}/>
+                <ColorBar handleColorClick={this.handleColorClick}/>
                 <WhiteboardSVG
                     tool={this.state.tool}
                 />

@@ -15,6 +15,7 @@ export default class Toolbar extends React.Component {
                         this.props.handleToolClick('pencil');
                     }
                 }><PencilIcon/></button>
+
                 <button onClick={
                     (e) => {
                         this.props.handleToolClick('eraser');
@@ -25,6 +26,7 @@ export default class Toolbar extends React.Component {
                         this.props.handleToolClick('text');
                     }
                 }><TextIcon /></button>
+
             </div>
         );
     }
