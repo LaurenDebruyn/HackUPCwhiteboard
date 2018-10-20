@@ -1,7 +1,5 @@
 // Main dependencies
 import React from 'react';
-
-// Main dependencies
 import {Layer, Image, Stage} from "react-konva";
 
 export default class Whiteboard extends React.Component {

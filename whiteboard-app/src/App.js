@@ -3,7 +3,7 @@ import React from 'react';
 
 // Own components
 import Toolbar from './Toolbar.js';
-import Whiteboard from './Whiteboard.js';
+import WhiteboardSVG from './WhiteboardSVG.js';
 
 // CSS
 import './App.css';
@@ -37,7 +37,7 @@ class App extends React.Component {
             <div>
                 <h1>Whiteboard App</h1>
                 <Toolbar handleToolClick={this.handleToolClick}/>
-                <Whiteboard
+                <WhiteboardSVG
                     tool={this.state.tool}
                 />
             </div>
