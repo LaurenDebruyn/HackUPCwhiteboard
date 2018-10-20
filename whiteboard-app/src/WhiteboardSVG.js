@@ -2,6 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
+
 export default class WhiteboardSVG extends React.Component {
     constructor(props) {
         super(props);
@@ -111,11 +113,8 @@ export default class WhiteboardSVG extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="whiteboard">
                 <svg
-                    style={{ border: '1px solid black', cursor: 'crosshair' }}
-                    width={200}
-                    height={200}
                     ref="canvas"
                     onMouseDown={this.handleDrawStart}
                     onTouchStart={this.handleDrawStart}
@@ -123,6 +122,7 @@ export default class WhiteboardSVG extends React.Component {
                     onTouchEnd={this.handleDrawEnd}
                     onMouseMove={this.handleDrawMove}
                     onTouchMove={this.handleDrawMove}
+                    className="canvas"
                 >
                     {[this.props.paths]}
                     {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color)}

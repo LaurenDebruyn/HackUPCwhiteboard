@@ -8,9 +8,6 @@ import Toolbar from './Toolbar.js';
 import ColorBar from "./ColorBar.js";
 import WhiteboardSVG from './WhiteboardSVG.js';
 
-// CSS
-import './App.css';
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -79,7 +76,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="app">
                 <h1>Whiteboard App</h1>
                 <Toolbar handleToolClick={this.handleToolClick}/>
                 <ColorBar handleColorClick={this.handleColorClick}/>
