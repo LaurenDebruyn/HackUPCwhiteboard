@@ -8,6 +8,7 @@ export default class WhiteboardSVG extends React.Component {
         super(props);
         this.state = {
             paths: [],
+            currentPath: [],
             isDrawing: false,
             top: 0,
             left: 0
@@ -31,10 +32,8 @@ export default class WhiteboardSVG extends React.Component {
         this.setState((prevState) => {
             if (!prevState.isDrawing) {
                 return {
-                    paths: prevState.paths.concat({
-                        id: Date.UTC()
-                    }),
-                    isDrawing: true
+                    isDrawing: true,
+                    activePath: []
                 }
             }
         });
@@ -47,10 +46,8 @@ export default class WhiteboardSVG extends React.Component {
             if (prevState.isDrawing) {
                 const x = pageX - prevState.left;
                 const y = pageY - prevState.top;
-                const paths = prevState.paths.slice(0);
-                const activePath = paths[paths.length - 1];
-                activePath.push({ x, y });
-                return { paths };
+                const activePath = prevState.activePath.concat({ x, y });
+                return { activePath };
             }
         });
     };
@@ -58,28 +55,44 @@ export default class WhiteboardSVG extends React.Component {
     handleDrawEnd() {
         this.setState((prevState) => {
             if (prevState.isDrawing) {
-                return { isDrawing: false };
+                const path = WhiteboardSVG.parsePoints(prevState.activePath);
+                if (path) {
+                    return {
+                        isDrawing: false,
+                        activePath: [],
+                        paths: prevState.paths.concat(path)
+                    };
+                }
+                return {
+                    isDrawing: false,
+                    activePath: []
+                };
             }
         });
     };
 
-    render() {
-        const paths = this.state.paths.map(_points => {
-            let path = '';
-            let points = _points.slice(0);
-            if (points.length > 0) {
-                path = `M ${points[0].x} ${points[0].y}`;
-                let p1, p2, end;
-                for (let i = 1; i < points.length - 2; i += 2) {
-                    p1 = points[i];
-                    p2 = points[i + 1];
-                    end = points[i + 2];
-                    path += ` C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${end.x} ${end.y}`;
-                }
+    static parsePoints(points) {
+        let path;
+        if (points && points.length > 0) {
+            path = `M ${points[0].x} ${points[0].y}`;
+            let p1, p2, end;
+            for (let i = 1; i < points.length - 2; i += 2) {
+                p1 = points[i];
+                p2 = points[i + 1];
+                end = points[i + 2];
+                path += ` C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${end.x} ${end.y}`;
             }
-            return path;
-        }).filter(p => p !== '');
+            return (<path
+                key={path}
+                stroke="blue"
+                strokeWidth={10}
+                d={path}
+                fill="none"
+            />);
+        }
+    }
 
+    render() {
         return (
             <div>
                 <svg
@@ -91,17 +104,8 @@ export default class WhiteboardSVG extends React.Component {
                     onMouseUp={this.handleDrawEnd}
                     onMouseMove={this.handleDrawMove}
                 >
-                {
-                    paths.map(path => {
-                        return (<path
-                            key={path}
-                            stroke="blue"
-                            strokeWidth={10}
-                            d={path}
-                            fill="none"
-                        />);
-                    })
-                }
+                    {[this.state.paths]}
+                    {WhiteboardSVG.parsePoints(this.state.activePath)}
                 </svg>
             </div>
         );
