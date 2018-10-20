@@ -1,8 +1,6 @@
 // Main dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Image} from "react-konva";
-
 
 export default class WhiteboardSVG extends React.Component {
     constructor(props) {

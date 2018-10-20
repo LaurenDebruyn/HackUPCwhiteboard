@@ -13,7 +13,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tool: 'pencil'
+            tool: 'pencil',
         };
         this.handleToolClick = this.handleToolClick.bind(this);
     }
