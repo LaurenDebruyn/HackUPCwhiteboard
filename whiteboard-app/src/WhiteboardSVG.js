@@ -30,8 +30,10 @@ export default class WhiteboardSVG extends React.Component {
         let pageX = e.pageX;
         let pageY = e.pageY;
         if (!pageX) {
-            pageX = e.touches[0].pageX;
-            pageY = e.touches[0].pageY;
+            if (e.touches) {
+                pageX = e.touches[0].pageX;
+                pageY = e.touches[0].pageY;
+            }
         }
 
         if (this.props.tool === 'text') {
@@ -57,8 +59,10 @@ export default class WhiteboardSVG extends React.Component {
             let pageX = e.pageX;
             let pageY = e.pageY;
             if (!pageX) {
-                pageX = e.touches[0].pageX;
-                pageY = e.touches[0].pageY;
+                if (e.touches) {
+                    pageX = e.touches[0].pageX;
+                    pageY = e.touches[0].pageY;
+                }
             }
             this.setState((prevState) => {
                 if (prevState.isDrawing) {

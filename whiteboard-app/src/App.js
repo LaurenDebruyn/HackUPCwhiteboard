@@ -17,7 +17,7 @@ class App extends React.Component {
         this.state = {
             tool: 'pencil',
             color: 'black',
-            size: 'medium',
+            size: 'extraSmall',
             paths: [],
             textFields: []
         };
