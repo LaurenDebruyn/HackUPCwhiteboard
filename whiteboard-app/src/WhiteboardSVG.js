@@ -7,15 +7,14 @@ export default class WhiteboardSVG extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            paths: [],
             currentPath: [],
             isDrawing: false,
             top: 0,
             left: 0
         };
         this.handleDrawStart = this.handleDrawStart.bind(this);
-        this.handleDrawEnd = this.handleDrawEnd.bind(this);
         this.handleDrawMove = this.handleDrawMove.bind(this);
+        this.handleDrawEnd = this.handleDrawEnd.bind(this);
     }
 
     componentDidMount() {
@@ -71,16 +70,10 @@ export default class WhiteboardSVG extends React.Component {
     };
 
     handleDrawEnd() {
-        this.setState((prevState, prevProps) => {
+        const path = WhiteboardSVG.parsePoints(this.state.activePath, this.props.color);
+        this.props.handleAddPath(path, true);
+        this.setState((prevState) => {
             if (prevState.isDrawing) {
-                const path = WhiteboardSVG.parsePoints(prevState.activePath, prevProps.color);
-                if (path) {
-                    return {
-                        isDrawing: false,
-                        activePath: [],
-                        paths: prevState.paths.concat(path)
-                    };
-                }
                 return {
                     isDrawing: false,
                     activePath: []
@@ -115,8 +108,8 @@ export default class WhiteboardSVG extends React.Component {
             <div>
                 <svg
                     style={{ border: '1px solid black', cursor: 'crosshair' }}
-                    width={600}
-                    height={480}
+                    width={200}
+                    height={200}
                     ref="canvas"
                     onMouseDown={this.handleDrawStart}
                     onTouchStart={this.handleDrawStart}
@@ -125,7 +118,7 @@ export default class WhiteboardSVG extends React.Component {
                     onMouseMove={this.handleDrawMove}
                     onTouchMove={this.handleDrawMove}
                 >
-                    {[this.state.paths]}
+                    {[this.props.paths]}
                     {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color)}
                     {[this.state.texts]}
                 </svg>
