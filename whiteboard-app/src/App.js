@@ -64,6 +64,7 @@ class App extends React.Component {
                     tool={this.state.tool}
                     handleAddPath={this.handleAddPath}
                     paths={this.state.paths}
+                    color={this.state.color}
                 />
             </div>
     );
