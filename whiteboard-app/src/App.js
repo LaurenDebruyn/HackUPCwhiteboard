@@ -8,23 +8,33 @@ import WhiteboardSVG from './WhiteboardSVG.js';
 
 // CSS
 import './App.css';
+import ColorBar from "./ColorBar";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tool: 'pencil'
+            tool: 'pencil',
+            color: 'black'
         };
         this.handleToolClick = this.handleToolClick.bind(this);
     }
 
     handleToolClick(tool) {
-            this.setState((prevState) => {
-                if (prevState.tool !== tool) {
-                    return {tool};
-                }
-            });
-        };
+        this.setState((prevState) => {
+            if (prevState.tool !== tool) {
+                return {tool};
+            }
+        });
+    };
+
+    handleColorClick(color) {
+        this.setState((prevState) => {
+            if (prevState.color !== color) {
+                return {color};
+            }
+        });
+    };
 
     componentDidMount() {
         const socket = openSocket('http://hackupcwhiteboard.herokuapp.com');
@@ -36,6 +46,7 @@ class App extends React.Component {
             <div>
                 <h1>Whiteboard App</h1>
                 <Toolbar handleToolClick={this.handleToolClick}/>
+                <ColorBar handleColorClick={this.handleColorClick}/>
                 <WhiteboardSVG
                     tool={this.state.tool}
                 />
