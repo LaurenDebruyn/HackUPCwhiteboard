@@ -25,6 +25,9 @@ class App extends React.Component {
     }
 
     handleToolClick(tool) {
+        if (tool === 'eraser'){
+            this.handleColorClick('white');
+        }
         this.setState((prevState) => {
             if (prevState.tool !== tool) {
                 return {tool};

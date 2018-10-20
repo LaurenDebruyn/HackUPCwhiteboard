@@ -39,9 +39,6 @@ export default class WhiteboardSVG extends React.Component {
             const text = prompt("Please enter your text","");
             this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color), true);
         }
-        else if (this.props.tool === 'eraser') {
-            console.log("eraser");
-        }
         else {
             console.log("draw");
             this.setState((prevState) => {
@@ -59,9 +56,6 @@ export default class WhiteboardSVG extends React.Component {
         if (this.props.tool === 'text') {
             console.log("drawing texbox size");
         }
-        else if (this.props.tool === 'eraser') {
-            console.log("erasing");
-        }
         else {
             console.log("drawing");
             const pageX = e.pageX;
@@ -78,7 +72,7 @@ export default class WhiteboardSVG extends React.Component {
     };
 
     handleDrawEnd() {
-        if (this.props.tool === 'pencil') {
+        if (this.props.tool === 'pencil' || this.props.tool === 'eraser') {
             const path = WhiteboardSVG.parsePoints(this.state.activePath, this.props.color);
             this.props.handleAddPath(path, true);
             this.setState((prevState) => {
