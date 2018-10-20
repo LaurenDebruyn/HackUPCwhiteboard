@@ -1,14 +1,14 @@
 // Main dependencies
-import React, { Component } from 'react';
+import React from 'react';
 
 // Own components
-import Toolbar from 'Toolbar';
-import Whiteboard from 'Whiteboard';
+import Toolbar from './Toolbar.js';
+import Whiteboard from './Whiteboard.js';
 
 // CSS
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,6 +26,13 @@ class App extends Component {
                 }
             });
         };
+
+    componentDidMount() {
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET', 'https://hackupcwhiteboard.herokuapp.com/test', false);
+        xmlHttp.send(null);
+        console.log(xmlHttp.responseText);
+    }
 
     render() {
         return (

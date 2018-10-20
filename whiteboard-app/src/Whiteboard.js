@@ -1,14 +1,16 @@
 // Main dependencies
-import {Layer, Line, Rect, Stage} from "react-konva";
-import React from "react";
+import React from 'react';
 
-class Whiteboard extends React.Component {
+// Main dependencies
+import {Layer, Line, Rect, Stage} from "react-konva";
+
+export default class Whiteboard extends React.Component {
     render() {
         return (
             <Stage
                 width={1000}
                 height={1000}
-                onMouseDown={handleMouseDown}
+                onMouseDown={this.handleMouseDown}
             >
                 <Layer>
                     <Line />
@@ -23,7 +25,7 @@ class Whiteboard extends React.Component {
     }
 
     handleMouseDown() {
-
+        console.log('Mousedown')
     }
 }
 
@@ -51,5 +53,3 @@ class Whiteboard extends React.Component {
 //         );
 //     }
 // }
-
-export default Whiteboard;

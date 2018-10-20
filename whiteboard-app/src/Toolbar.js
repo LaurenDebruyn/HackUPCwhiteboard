@@ -1,12 +1,11 @@
 // Main dependencies
-import {Component} from "react";
+import React from 'react';
 
 // Icons
 import {ReactComponent as PencilIcon} from "./pencil.svg";
 import {ReactComponent as TextIcon} from "./text.svg";
-import React from "react";
 
-class Toolbar extends Component {
+export default class Toolbar extends React.Component {
     render () {
         return (
             <div>
@@ -24,5 +23,3 @@ class Toolbar extends Component {
         );
     }
 }
-
-export default Toolbar;
