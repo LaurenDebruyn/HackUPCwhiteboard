@@ -54,12 +54,6 @@ button {
     z-index: 10;
 }
 
-@media only screen and (max-width: 600px) {
-    #title {
-        display: none;
-    }
-}
-
 .bars {
     position: absolute;
     z-index: 10;
