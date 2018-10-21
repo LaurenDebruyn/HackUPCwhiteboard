@@ -94,11 +94,22 @@ class App extends React.Component {
 
     clear(){
         this.setState(() => ({tool: 'pencil',textFields: [], paths: []}));
-        this.socket.emit('update', 'lege lijst lul');
+        this.socket.emit('clear', '');
 
     }
 
-    brainstorm
+    brainstorm(){
+        const Subject = prompt("Please enter your Subject","");
+        const Category1 = prompt("Please enter your first Category","");
+        const Category2 = prompt("Please enter your second Category","");
+        const Category3 = prompt("Please enter your third Category","");
+        const Category4 = prompt("Please enter your fourth Category","");
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 600, 600, this.props.color), true); //font-size
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 300, 100, this.props.color), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 900, 100, this.props.color), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 300, 700, this.props.color), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 900, 700, this.props.color), true);
+    }
 
     render() {
         return (
