@@ -55,8 +55,15 @@ class App extends React.Component {
         });
     };
 
-
     componentDidMount() {
+        this.socket.on('init', (pathsJSON) => {
+            console.log(pathsJSON);
+            if (pathsJSON) {
+                const pathsStrings = JSON.parse(pathsJSON);
+                const paths = pathsStrings.map((path) => deserialize(path));
+                this.setState(() => ({paths}))
+            }
+        });
         this.socket.on('update', (serializedPath) => {
             console.log('Receive: ', deserialize(serializedPath));
             this.handleAddPath(deserialize(serializedPath), false);
