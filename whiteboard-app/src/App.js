@@ -62,15 +62,18 @@ class App extends React.Component {
 
     componentDidMount() {
         this.socket.on('init', (pathsJSON) => {
-            console.log(pathsJSON);
+            console.log('Enter init');
+            console.log('Init data:', pathsJSON);
             if (pathsJSON) {
                 const pathsStrings = JSON.parse(pathsJSON);
-                const paths = pathsStrings.map((path) => deserialize(path));
+                const paths = pathsStrings.map((path) => {
+                    return deserialize(path);
+                });
                 this.setState(() => ({paths}))
             }
         });
         this.socket.on('update', (serializedPath) => {
-            console.log('Receive: ', deserialize(serializedPath));
+            console.log('Receive new path');
             this.handleAddPath(deserialize(serializedPath), false);
         })
     }
@@ -82,7 +85,7 @@ class App extends React.Component {
             if (emit) {
                 const serializedPath = serialize(path);
                 this.socket.emit('update', serializedPath);
-                console.log('Emit');
+                console.log('Emit new path');
             }
         }
     };
