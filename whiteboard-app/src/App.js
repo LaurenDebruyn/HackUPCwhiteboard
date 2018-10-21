@@ -148,7 +148,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <h1 id="title" onClick={this.brainstorm}>Brainstorming 🌩️</h1>
+                <button id="title" onClick={this.brainstorm}>Brainstorm 🌩️</button>
                 <div className="bars">
                     <Toolbar handleToolClick={this.handleToolClick}/>
                     <ColorBar handleColorClick={this.handleColorClick}/>
