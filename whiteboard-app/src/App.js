@@ -20,8 +20,16 @@ class App extends React.Component {
             size: 'extraSmall',
             paths: [],
             textFields: [],
-            brainstorm: []
+            brainstorm: false
         };
+
+        this.svgElements = [
+            <line x1={700} y1={0} x2={700} y2={240} strokeWidth={10} stroke="yellow"/>,
+                <line x1={700} y1={420} x2={700} y2={2000} strokeWidth={10} stroke="yellow"/>,
+                <line x1={0} y1={350} x2={560} y2={350} strokeWidth={10} stroke="yellow"/>,
+                <line x1={880} y1={350} x2={2000} y2={350} strokeWidth={10} stroke="yellow"/>
+        ];
+
         this.handleToolClick = this.handleToolClick.bind(this);
         this.handleColorClick = this.handleColorClick.bind(this);
         this.handleSizeClick = this.handleSizeClick.bind(this);
@@ -36,6 +44,8 @@ class App extends React.Component {
         }
         else if (tool === 'clear') {
             this.clear();
+            this.socket.emit('clear', '');
+            console.log('Emit clear');
         }
         else {
             this.setState((prevState) => {
@@ -74,7 +84,14 @@ class App extends React.Component {
         this.socket.on('update', (serializedPath) => {
             console.log('Receive new path');
             this.handleAddPath(deserialize(serializedPath), false);
-        })
+        });
+        this.socket.on('brainstorm', (bool) => {
+            console.log('Brainstorm (de)activated');
+            this.setState(() => ({brainstorm: bool}))
+        });
+        this.socket.on('clear', () => {
+            this.clear();
+        });
     }
 
     handleAddPath(path, emit) {
@@ -106,14 +123,14 @@ class App extends React.Component {
             tool: 'pencil',
             textFields: [],
             paths: [],
-            brainstorm: []
+            brainstorm: false
         }));
-        this.socket.emit('clear', '');
-        console.log('Emit clear');
     }
 
     brainstorm(){
         this.clear();
+        this.socket.emit('clear', '');
+        console.log('Emit clear');
         const Subject = prompt("Please enter your Subject","");
         const Category1 = prompt("Please enter your first Category","");
         const Category2 = prompt("Please enter your second Category","");
@@ -124,13 +141,8 @@ class App extends React.Component {
         this.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 1000, 150,  'black', 30), true);
         this.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 240, 450,  'black', 30), true);
         this.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 1000, 450,  'black', 30), true);
-        const svgElements = [
-            <line x1={700} y1={0} x2={700} y2={240} strokeWidth={10} stroke="yellow"/>,
-            <line x1={700} y1={420} x2={700} y2={2000} strokeWidth={10} stroke="yellow"/>,
-            <line x1={0} y1={350} x2={560} y2={350} strokeWidth={10} stroke="yellow"/>,
-            <line x1={880} y1={350} x2={2000} y2={350} strokeWidth={10} stroke="yellow"/>,
-        ];
-        this.setState(() => ({brainstorm: svgElements}));
+        this.setState(() => ({brainstorm: true}));
+        this.socket.emit('brainstorm', true);
     }
 
     render() {
@@ -152,6 +164,7 @@ class App extends React.Component {
                     color={this.state.color}
                     size={this.state.size}
                     brainstorm={this.state.brainstorm}
+                    svgElements={this.svgElements}
                 />
             </div>
     );
