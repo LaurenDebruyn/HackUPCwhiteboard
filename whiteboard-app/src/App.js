@@ -104,11 +104,11 @@ class App extends React.Component {
         const Category2 = prompt("Please enter your second Category","");
         const Category3 = prompt("Please enter your third Category","");
         const Category4 = prompt("Please enter your fourth Category","");
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 600, 600, this.props.color), true); //font-size
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 300, 100, this.props.color), true);
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 900, 100, this.props.color), true);
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 300, 700, this.props.color), true);
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 900, 700, this.props.color), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 600, 600, this.props.color, 60), true); //font-size
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 300, 100, this.props.color, 30), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 900, 100, this.props.color, 30), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 300, 700, this.props.color, 30), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 900, 700, this.props.color, 30), true);
     }
 
     render() {
