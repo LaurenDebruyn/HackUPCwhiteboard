@@ -38,7 +38,7 @@ export default class WhiteboardSVG extends React.Component {
 
         if (this.props.tool === 'text') {
             const text = prompt("Please enter your text","");
-            this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color), true);
+            this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color,WhiteboardSVG.getSize(this.props.size)), true);
         }
         else {
             this.setState((prevState) => {
@@ -88,8 +88,8 @@ export default class WhiteboardSVG extends React.Component {
         }
     };
 
-    static textToSVG(text, x, y, color) {
-        return <text x={x} y={y} fill={color}>{text}</text>;
+    static textToSVG(text, x, y, color, size) {
+        return <text x={x} y={y} fill={color} fontSize={size*2}>{text}</text>;
     }
 
     static parsePoints(points, color, size) {
@@ -148,6 +148,7 @@ export default class WhiteboardSVG extends React.Component {
                     className="canvas"
                 >
                     {[this.props.paths]}
+                    {[this.props.brainstorm]}
                     {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color, WhiteboardSVG.getSize(this.props.size))}
                     {[this.props.textFields]}
                 </svg>
