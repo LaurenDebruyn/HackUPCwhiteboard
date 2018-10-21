@@ -63,13 +63,10 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        this.socket.on('init', (pathsJSON) => {
-            console.log('Enter init');
-            console.log('Init data:', pathsJSON);
-            if (pathsJSON) {
-                const pathsStrings = JSON.parse(pathsJSON);
-                const paths = pathsStrings.map((path) => {
-                    return deserialize(path);
+        this.socket.on('init', (data) => {
+            if (data) {
+                const paths = data.map((path) => {
+                    return deserialize(path.data);
                 });
                 this.setState(() => ({paths}))
             }
@@ -99,19 +96,24 @@ class App extends React.Component {
             if (emit) {
                 const serializedText = serialize(text);
                 this.socket.emit('update', serializedText);
-                console.log('Emit');
+                console.log('Emit new text');
             }
         }
     }
 
     clear(){
-        this.setState(() => ({tool: 'pencil',textFields: [], paths: []}));
+        this.setState(() => ({
+            tool: 'pencil',
+            textFields: [],
+            paths: [],
+            brainstorm: []
+        }));
         this.socket.emit('clear', '');
-
+        console.log('Emit clear');
     }
 
     brainstorm(){
-        this.clear()
+        this.clear();
         const Subject = prompt("Please enter your Subject","");
         const Category1 = prompt("Please enter your first Category","");
         const Category2 = prompt("Please enter your second Category","");
