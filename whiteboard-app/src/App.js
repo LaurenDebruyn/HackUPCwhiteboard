@@ -48,6 +48,9 @@ class App extends React.Component {
             console.log('Emit clear');
         }
         else {
+            if (this.state.color === 'white') {
+                this.handleColorClick('black');
+            }
             this.setState((prevState) => {
                 if (prevState.tool !== tool) {
                     return {tool};
