@@ -5,16 +5,18 @@ import React from 'react';
 import {ReactComponent as PencilIcon} from "./pencil.svg";
 import {ReactComponent as EraserIcon} from "./eraser.svg";
 import {ReactComponent as TextIcon} from "./text.svg";
+import {ReactComponent as DeleteIcon} from "./delete.svg";
 
 export default class Toolbar extends React.Component {
     render () {
         return (
-            <div>
+            <div className="bar">
                 <button onClick={
                     (e) => {
                         this.props.handleToolClick('pencil');
                     }
-                }><PencilIcon /></button>
+                }><PencilIcon/></button>
+
                 <button onClick={
                     (e) => {
                         this.props.handleToolClick('eraser');
@@ -25,6 +27,13 @@ export default class Toolbar extends React.Component {
                         this.props.handleToolClick('text');
                     }
                 }><TextIcon /></button>
+
+                <button onClick={
+                    (e) => {
+                        this.props.handleToolClick('clear');
+                    }
+                }><DeleteIcon /></button>
+
             </div>
         );
     }

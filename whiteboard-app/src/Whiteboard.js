@@ -1,8 +1,6 @@
 // Main dependencies
 import React from 'react';
-
-// Main dependencies
-import {Layer, Image, Stage} from "react-konva";
+// import {Layer, Image, Stage} from "react-konva";
 
 export default class Whiteboard extends React.Component {
     render() {
@@ -40,17 +38,17 @@ class Drawing extends React.Component {
         this.setState(() => ({canvas, context}));
     }
 
-    handleMouseDown = () => {
+    handleDrawStart = () => {
         this.setState(() => ({isDrawing: true}));
         const stage = this.image.getStage();
         this.lastPointerPosition = stage.getPointerPosition();
     };
 
-    handleMouseUp = () => {
+    handleDrawEnd = () => {
         this.setState(() => ({isDrawing: false}));
     };
 
-    handleMouseMove = (e) => {
+    handleDrawMove = (e) => {
         const {context, isDrawing} = this.state;
 
         if (isDrawing) {
@@ -96,9 +94,12 @@ class Drawing extends React.Component {
                 ref={(node) => (this.image = node)}
                 width={500}
                 height={500}
-                onMouseDown={this.handleMouseDown}
-                onMouseUp={this.handleMouseUp}
-                onMouseMove={this.handleMouseMove}
+                onMouseDown={this.handleDrawStart}
+                onTouchStart={this.handleDrawStart}
+                onMouseUp={this.handleDrawEnd}
+                onTouchEnd={this.handleDrawEnd}
+                onMouseMove={this.handleDrawMove}
+                onTouchMove={this.handleDrawMove}
             />
         );
     }
