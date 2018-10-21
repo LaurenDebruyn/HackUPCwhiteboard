@@ -91,9 +91,12 @@ class App extends React.Component {
         return (
             <div className="app">
                 <h1 id="title">Whiteboard App</h1>
-                <Toolbar handleToolClick={this.handleToolClick}/>
-                <ColorBar handleColorClick={this.handleColorClick}/>
-                <SizeBar handleSizeClick={this.handleSizeClick}/>
+                <div className="bars">
+                    <Toolbar handleToolClick={this.handleToolClick}/>
+                    <ColorBar handleColorClick={this.handleColorClick}/>
+                    <SizeBar handleSizeClick={this.handleSizeClick}/>
+                </div>
+
                 <WhiteboardSVG
                     tool={this.state.tool}
                     handleAddPath={this.handleAddPath}
