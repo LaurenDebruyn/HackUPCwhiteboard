@@ -36,3 +36,26 @@ body {
     width: 100%;
     height: 100%;
 }
+
+button {
+    margin: 3px;
+    height: 30px;
+    float: left;
+}
+
+.bar {
+    width: 100%;
+    float: left;
+}
+
+#title {
+    position: absolute;
+    right: 20px;
+    z-index: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    #title {
+        display: none;
+    }
+}

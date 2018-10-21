@@ -7,7 +7,7 @@ import {ReactComponent as ColorBox} from "./colorbox.svg";
 export default class ColorBar extends React.Component {
     render () {
         return (
-            <div>
+            <div className="bar">
                 <button onClick={
                     (e) => {
                         this.props.handleColorClick('red');

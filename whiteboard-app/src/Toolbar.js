@@ -9,7 +9,7 @@ import {ReactComponent as TextIcon} from "./text.svg";
 export default class Toolbar extends React.Component {
     render () {
         return (
-            <div>
+            <div className="bar">
                 <button onClick={
                     (e) => {
                         this.props.handleToolClick('pencil');
