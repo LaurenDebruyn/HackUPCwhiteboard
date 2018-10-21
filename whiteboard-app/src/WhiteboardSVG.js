@@ -150,6 +150,7 @@ export default class WhiteboardSVG extends React.Component {
                     className="canvas"
                 >
                     {[this.props.paths]}
+                    {[this.props.brainstorm]}
                     {WhiteboardSVG.parsePoints(this.state.activePath, this.props.color, WhiteboardSVG.getSize(this.props.size))}
                     {[this.props.textFields]}
                 </svg>

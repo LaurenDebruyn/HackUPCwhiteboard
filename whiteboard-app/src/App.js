@@ -19,13 +19,15 @@ class App extends React.Component {
             color: 'black',
             size: 'extraSmall',
             paths: [],
-            textFields: []
+            textFields: [],
+            brainstorm: []
         };
         this.handleToolClick = this.handleToolClick.bind(this);
         this.handleColorClick = this.handleColorClick.bind(this);
         this.handleSizeClick = this.handleSizeClick.bind(this);
         this.handleAddPath = this.handleAddPath.bind(this);
         this.handleAddTextField = this.handleAddTextField.bind(this);
+        this.brainstorm = this.brainstorm.bind(this);
     }
 
     handleToolClick(tool) {
@@ -99,16 +101,24 @@ class App extends React.Component {
     }
 
     brainstorm(){
+        this.clear()
         const Subject = prompt("Please enter your Subject","");
         const Category1 = prompt("Please enter your first Category","");
         const Category2 = prompt("Please enter your second Category","");
         const Category3 = prompt("Please enter your third Category","");
         const Category4 = prompt("Please enter your fourth Category","");
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 600, 600, this.props.color, 60), true); //font-size
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 300, 100, this.props.color, 30), true);
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 900, 100, this.props.color, 30), true);
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 300, 700, this.props.color, 30), true);
-        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 900, 700, this.props.color, 30), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 620, 360, 'black', 45), true); //font-size
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 240, 150,  'black', 30), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 1000, 150,  'black', 30), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 240, 450,  'black', 30), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 1000, 450,  'black', 30), true);
+        const svgElements = [
+            <line x1={700} y1={0} x2={700} y2={240} strokeWidth={10} stroke="yellow"/>,
+            <line x1={700} y1={420} x2={700} y2={2000} strokeWidth={10} stroke="yellow"/>,
+            <line x1={0} y1={350} x2={560} y2={350} strokeWidth={10} stroke="yellow"/>,
+            <line x1={880} y1={350} x2={2000} y2={350} strokeWidth={10} stroke="yellow"/>,
+        ];
+        this.setState(() => ({brainstorm: svgElements}));
     }
 
     render() {
@@ -129,6 +139,7 @@ class App extends React.Component {
                     textFields={this.state.textFields}
                     color={this.state.color}
                     size={this.state.size}
+                    brainstorm={this.state.brainstorm}
                 />
             </div>
     );
