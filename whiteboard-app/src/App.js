@@ -46,17 +46,15 @@ class App extends React.Component {
             this.clear();
             this.socket.emit('clear', '');
             console.log('Emit clear');
+            return;
         }
         else {
             if (this.state.color === 'white') {
                 this.handleColorClick('black');
             }
-            this.setState((prevState) => {
-                if (prevState.tool !== tool) {
-                    return {tool};
-                }
-            });
         }
+
+        this.setState(() => ({tool}));
     };
 
     handleColorClick(color) {
@@ -151,7 +149,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <button id="title" onClick={this.brainstorm}>Brainstorm 🌩️</button>
+                <button id="title" onClick={this.brainstorm}>Brainstorm!</button>
                 <div className="bars">
                     <Toolbar handleToolClick={this.handleToolClick}/>
                     <ColorBar handleColorClick={this.handleColorClick}/>
