@@ -90,7 +90,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <h1 id="title">Whiteboard App</h1>
+                <h1 id="title">Brainstorming 🌩️</h1>
                 <div className="bars">
                     <Toolbar handleToolClick={this.handleToolClick}/>
                     <ColorBar handleColorClick={this.handleColorClick}/>
