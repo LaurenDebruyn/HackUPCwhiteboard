@@ -29,14 +29,19 @@ class App extends React.Component {
     }
 
     handleToolClick(tool) {
-        if (tool === 'eraser'){
+        if (tool === 'eraser') {
             this.handleColorClick('white');
         }
-        this.setState((prevState) => {
-            if (prevState.tool !== tool) {
-                return {tool};
-            }
-        });
+        else if (tool === 'clear') {
+            this.clear();
+        }
+        else {
+            this.setState((prevState) => {
+                if (prevState.tool !== tool) {
+                    return {tool};
+                }
+            });
+        }
     };
 
     handleColorClick(color) {
@@ -94,10 +99,29 @@ class App extends React.Component {
         }
     }
 
+    clear(){
+        this.setState(() => ({tool: 'pencil',textFields: [], paths: []}));
+        this.socket.emit('clear', '');
+
+    }
+
+    brainstorm(){
+        const Subject = prompt("Please enter your Subject","");
+        const Category1 = prompt("Please enter your first Category","");
+        const Category2 = prompt("Please enter your second Category","");
+        const Category3 = prompt("Please enter your third Category","");
+        const Category4 = prompt("Please enter your fourth Category","");
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 600, 600, this.props.color), true); //font-size
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 300, 100, this.props.color), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 900, 100, this.props.color), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 300, 700, this.props.color), true);
+        this.props.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 900, 700, this.props.color), true);
+    }
+
     render() {
         return (
             <div className="app">
-                <h1 id="title">Brainstorming 🌩️</h1>
+                <h1 id="title" onClick={this.brainstorm}>Brainstorming 🌩️</h1>
                 <div className="bars">
                     <Toolbar handleToolClick={this.handleToolClick}/>
                     <ColorBar handleColorClick={this.handleColorClick}/>
