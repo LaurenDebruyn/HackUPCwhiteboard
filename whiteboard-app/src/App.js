@@ -24,10 +24,10 @@ class App extends React.Component {
         };
 
         this.svgElements = [
-            <line x1={700} y1={0} x2={700} y2={240} strokeWidth={10} stroke="yellow"/>,
-                <line x1={700} y1={420} x2={700} y2={2000} strokeWidth={10} stroke="yellow"/>,
-                <line x1={0} y1={350} x2={560} y2={350} strokeWidth={10} stroke="yellow"/>,
-                <line x1={880} y1={350} x2={2000} y2={350} strokeWidth={10} stroke="yellow"/>
+            <line x1={700} y1={0} x2={700} y2={240} strokeWidth={10} stroke="grey"/>,
+                <line x1={700} y1={420} x2={700} y2={2000} strokeWidth={10} stroke="grey"/>,
+                <line x1={0} y1={350} x2={560} y2={350} strokeWidth={10} stroke="grey"/>,
+                <line x1={880} y1={350} x2={2000} y2={350} strokeWidth={10} stroke="grey"/>
         ];
 
         this.handleToolClick = this.handleToolClick.bind(this);
@@ -136,11 +136,11 @@ class App extends React.Component {
         const Category2 = prompt("Please enter your second Category","");
         const Category3 = prompt("Please enter your third Category","");
         const Category4 = prompt("Please enter your fourth Category","");
-        this.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 620, 360, 'black', 45), true); //font-size
-        this.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 240, 150,  'black', 30), true);
-        this.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 1000, 150,  'black', 30), true);
-        this.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 240, 450,  'black', 30), true);
-        this.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 1000, 450,  'black', 30), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Subject, 580, 360, 'black', 35), true); //font-size
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category1, 240, 150,  'black', 25), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category2, 1000, 150,  'black', 25), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category3, 240, 600,  'black', 25), true);
+        this.handleAddTextField(WhiteboardSVG.textToSVG(Category4, 1000, 600,  'black', 25), true);
         this.setState(() => ({brainstorm: true}));
         this.socket.emit('brainstorm', true);
     }
