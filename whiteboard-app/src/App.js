@@ -29,14 +29,19 @@ class App extends React.Component {
     }
 
     handleToolClick(tool) {
-        if (tool === 'eraser'){
+        if (tool === 'eraser') {
             this.handleColorClick('white');
         }
-        this.setState((prevState) => {
-            if (prevState.tool !== tool) {
-                return {tool};
-            }
-        });
+        else if (tool === 'clear') {
+            this.clear();
+        }
+        else {
+            this.setState((prevState) => {
+                if (prevState.tool !== tool) {
+                    return {tool};
+                }
+            });
+        }
     };
 
     handleColorClick(color) {
@@ -87,10 +92,18 @@ class App extends React.Component {
         }
     }
 
+    clear(){
+        this.setState(() => ({tool: 'pencil',textFields: [], paths: []}));
+        this.socket.emit('update', 'lege lijst lul');
+
+    }
+
+    brainstorm
+
     render() {
         return (
             <div className="app">
-                <h1 id="title">Brainstorming 🌩️</h1>
+                <h1 id="title" onClick={this.brainstorm}>Brainstorming 🌩️</h1>
                 <div className="bars">
                     <Toolbar handleToolClick={this.handleToolClick}/>
                     <ColorBar handleColorClick={this.handleColorClick}/>
