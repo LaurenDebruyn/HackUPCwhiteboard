@@ -35,10 +35,10 @@ export default class WhiteboardSVG extends React.Component {
                 pageY = e.touches[0].pageY;
             }
         }
+        const x = pageX - this.state.left;
+        const y = pageY - this.state.top;
 
         if (this.props.tool === 'text') {
-            const x = pageX - this.state.left;
-            const y = pageY - this.state.top;
             const text = prompt("Please enter your text","");
             this.props.handleAddTextField(WhiteboardSVG.textToSVG(text, x, y, this.props.color), true);
         }
@@ -47,7 +47,7 @@ export default class WhiteboardSVG extends React.Component {
                 if (!prevState.isDrawing) {
                     return {
                         isDrawing: true,
-                        activePath: []
+                        activePath: [{x,y}]
                     }
                 }
             });
